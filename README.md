@@ -161,7 +161,7 @@ The future development will be taking in request and ideas from the community.
 
 If you like the dashboard, please grab an NFT or 2 on LoopExchange ShiddyZoo - Meet the Zoo on LoopExchange [https://loopexchange.art/collection/shiddyzoo](https://loopexchange.art/collection/shiddyzoo) 
 
-Or LayerRadio.eth
+Or LayerRadio.eth - [0xb36a4675be59cd8ef2cbef43ebfb06c053e41848](https://explorer.loopring.io/account/192416)
 
 ## Testing
 
