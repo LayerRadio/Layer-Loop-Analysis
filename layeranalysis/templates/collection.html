@@ -1,0 +1,149 @@
+{% extends "layout.html" %}
+
+{% block css %}
+  <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block dropDownCss %}
+  <link href="{{ url_for('static', filename='css/dropdown.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block nav_collection %}active{% endblock %}
+
+{% block content %}
+    <div class="card-group  flex-wrap">
+        <div class="card text-light bg-dark bg-gradient rounded ">
+            <div class="card-title">
+                <h2 class="mt-4">Retrieve Transactions of a Collection</h2>
+            </div>
+            <div class="card-body">
+                <div class="container-fluid mx-5">
+                    <form method="POST" action="{{ url_for('collection') }}" id="fetch_id">
+                        <div class="form-group">
+                            {{ form.csrf_token() }}
+                            {{ form.address.label }}
+                            {{ form.address(class_="form-control ", style="width: 70%;", placeholder="Search Collection Address (0x...)") }}
+                            {% for field, errors in form.errors.items() %}
+                                <small class="form-text text-muted">
+                                    {{ ', '.join(errors) }}
+                                </small>
+                            {% endfor %}
+                        </div>
+                        </br>
+
+                        <div class="form form-group ">
+                            {{ form.submit(class="btn btn-primary" ) }}
+                        </div>
+                    </form>
+                </div>
+                <div align="center">
+                    {% with messages = get_flashed_messages(category_filter=["categoryFetchSuccess"]) %}
+                        {% if messages %}
+                            {% for message in messages %}
+                                <div class="alert alert-success" role="alert">{{ message }}</div>
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
+
+                    {% with messages = get_flashed_messages(category_filter=["categoryFetchError"]) %}
+                        {% if messages %}
+                            {% for message in messages %}
+                                <div class="alert alert-danger" role="alert">{{ message }}</div>
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <br/>
+    <br/>
+
+    <div class="container-fluid ">
+        <br />
+        <h3 align="center">Collections by Contract Address</h3>
+        <br />
+        <form method="POST" action="/updateCollection" id="updateChecked">
+            <div class="table-responsive">
+                <table  class="table table-dark table-bordered table-striped">
+                    <tr>
+                        <th>Select</th>
+                        <th>Collection</th>
+                        <th>Name</th>
+                        <th>Active</th>
+                        <th>Status</th>
+                        <th>Last Updated</th>
+                    </tr>
+                    {% for row in contacts %}
+                    <tr id="{{row.id}}">
+                        <td><input type="checkbox" name="mycheckbox1" value="{{row.id}}" /></td>
+                        <th>{{row.collection_address}}</th>
+                        <th>{{row.name}}</th>
+                        {% if row.active == 0 %}
+                            <th>No</th>
+                        {% else %}
+                            <th>Yes</th>
+                        {% endif %}
+                        <th>{{row.updating}}</th>
+                        <th>{{row.last_updated.strftime('%Y-%m-%d %H:%M')}}</th>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+            <div align="center">
+                {% with messages = get_flashed_messages(category_filter=["flashUpdateMessageSuccess"]) %}
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert alert-success" role="alert">{{ message }}</div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+                {% with messages = get_flashed_messages(category_filter=["flashUpdateMessageError"]) %}
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert alert-danger" role="alert">{{ message }}</div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+
+                <input type="submit" name="submit_button" value="Load All Selected items in Dashboard" class="btn btn-primary">
+                <input type="submit" name="submit_button" value="Update All Selected items" class="btn btn-primary" onclick="$('#loading').show();">
+                <input type="submit" name="submit_button" value="Delete All Selected items" class="btn btn-danger">
+            </div>
+        </form>
+    </div>
+
+
+{% endblock %}
+
+
+{% block datatable_scripts %}
+    <script>
+        $(document).ready(function() {
+            $('#collections_in_db').DataTable({
+            ajax: '/callback/table/getCollectionsInDB',
+                columns: [
+                    null,
+                    {data: 'Collection', orderable: true, searchable: false},
+                    {data: 'Name', orderable: true, searchable: false},
+                    {data: 'Active', orderable: true, searchable: false},
+                    {data: 'Status', orderable: true, searchable: false},
+                    {data: 'Last Updated', orderable: true, searchable: false}
+                ],
+                order: [[5, 'desc']],
+            });
+        });
+    </script>
+{% endblock %}
+
+
+{% block form_scripts %}
+<script>
+ $(document).ready(function() {
+        $("#fetch_id").submit(function(e) {
+            $('#loading').show();
+        });
+    });
+</script>
+{% endblock %}

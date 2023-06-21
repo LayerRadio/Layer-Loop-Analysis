@@ -1,0 +1,166 @@
+{% extends "layout.html" %}
+
+{% block css %}
+  <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block nav_collection %}active{% endblock %}
+
+{% block content %}
+
+<div class="card-group  flex-wrap">
+    <div class="card text-white bg-dark bg-gradient rounded mb-3 py-3">
+
+        <div class="card-body">
+            <h5 class="card-title">Raw Collection Transaction History</h5>
+            </p>
+            <div class="table-responsive">
+                <table id="table_raw_collection_data" class="table table-dark table-bordered table-striped" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>Tx Id</th>
+                            <th>Nft ID</th>
+                            <th>Tx Type</th>
+                            <th>Contract Address</th>
+                            <th>From Acct Id</th>
+                            <th>From Acct Address</th>
+                            <th>To Acct Id</th>
+                            <th>To Acct Address</th>
+                            <th>Realized Nft Price</th>
+                            <th>Sell Token</th>
+                            <th>From Fee</th>
+                            <th>From Fee Token</th>
+                            <th>To Fee</th>
+                            <th>To Fee Token</th>
+                            <th>Amount</th>
+                            <th>Block_Timestamp</th>
+                            <th>Royalties</th>
+                            <th>Royalties Token</th>
+                            <th>Creator Fee Bips</th>
+                            <th>Minter</th>
+                            <th>Full Nft Id</th>
+                        </tr>
+                    </thead>
+                    {% for row in total_acct_sales %}
+                    <tr id="{{row.Tx_ID}}">
+                        <th>{{row.Tx_Id}}</th>
+                        <th>{{row.Nft_Id}}</th>
+                        <th>{{row.Tx_Type}}</th>
+                        <th>{{row.Coll_Addr}}</th>
+                        <th>{{row.From_Acct_Id}}</th>
+                        <th>{{row.From_Acct_Addr}}</th>
+                        <th>{{row.To_Acct_Id}}</th>
+                        <th>{{row.To_Acct_Address}}</th>
+                        <th>{{ '%0.8f' | format(row.Realized_Nft_Price | float()) }}</th>
+                        <th>{{row.Sell_Sym}}</th>
+                        <th>{{ '%0.8f' | format(row.From_Fee | float()) }}</th>
+                        <th>{{row.From_Fee_Sym}}</th>
+                        <th>{{ '%0.8f' | format(row.To_Fee | float()) }}</th>
+                        <th>{{row.To_Fee_Sym}}</th>
+                        <th>{{row.Amount}}</th>
+                        <th>{{row.Block_Timestamp}}</th>
+                        <th>{{ '%0.8f' | format(row.Royalties | float()) }}</th>
+                        <th>{{row.Royalties_Sym}}</th>
+                        <th>{{row.Creator_Fee_Bips}}</th>
+                        <th>{{row.Minter}}</th>
+                        <th>{{row.Full_Nft_Id}}</th>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
+{% block datatable_scripts %}
+    <script>
+        $(document).ready(function() {
+            $('#table_raw_collection_data').DataTable({
+                dom: "<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'f>>" +
+                    "<'row mb-2'<'col-sm-12'tr>>" +
+                    "<'row'<'col-sm-12 col-md-5'B><'col-sm-12 col-md-7'p>>" +
+                    "<'row'<'col-sm-12 text-end small text-muted'i>>",
+                ajax: '/callback/table/getRawCollectionData',
+                buttons:[
+                        {
+                            extend: 'csvHtml5',
+                            text:   'Export CSV',
+                            filename: function () {
+                                var d = new Date();
+                                var n = d.getTime();
+                                return 'RawCollectionData_' + n;}
+                        },
+                        'copy'],
+                initComplete: function () {
+                    var btns = $('.dt-button');
+                    btns.addClass('btn btn-primary');
+                    btns.removeClass('dt-button');
+                },
+                columns: [
+                    {data: 'Tx_Id', orderable: true, searchable: true},
+                    {data: 'Nft_Id', orderable: true, searchable: false},
+                    {data: 'Tx_Type', orderable: true, searchable: true},
+                    {data: 'Coll_Addr', orderable: true, searchable: false},
+                    {data: 'From_Acct_Id', orderable: true, searchable: true},
+                    {data: 'From_Acct_Addr', orderable: true, searchable: true},
+                    {data: 'To_Acct_Id', orderable: true, searchable: true},
+                    {data: 'To_Acct_Address', orderable: true, searchable: true},
+                    {data: 'Realized_Nft_Price', orderable: true, searchable: false},
+                    {data: 'Sell_Sym', orderable: true, searchable: true},
+                    {data: 'From_Fee', orderable: true, searchable: false},
+                    {data: 'From_Fee_Sym', orderable: true, searchable: true},
+                    {data: 'To_Fee', orderable: true, searchable: false},
+                    {data: 'To_Fee_Sym', orderable: true, searchable: true},
+                    {data: 'Amount', orderable: true, searchable: false},
+                    {data: 'Block_Timestamp', orderable: true, searchable: false},
+                    {data: 'Royalties', orderable: true, searchable: false},
+                    {data: 'Royalties_Sym', orderable: true, searchable: true},
+                    {data: 'Creator_Fee_Bips', orderable: true, searchable: false},
+                    {data: 'Minter', orderable: true, searchable: false},
+                    {data: 'Full_Nft_Id', orderable: true, searchable: true}
+
+                ],
+                "lengthMenu": [10,25,50,100,500,1000],
+                order: [[0, 'desc']],
+                "sScrollX": "100%",
+                "scrollCollapse": true,
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            $('#table_account_volume').DataTable({
+                dom: "<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'f>>" +
+                    "<'row mb-2'<'col-sm-12'tr>>" +
+                    "<'row'<'col-sm-12 col-md-5'B><'col-sm-12 col-md-7'p>>" +
+                    "<'row'<'col-sm-12 text-end small text-muted'i>>",
+                ajax: '/callback/table/getVolumeByAccount',
+                buttons:[
+                        {
+                            extend: 'csvHtml5',
+                            text:   'Export CSV',
+                            filename: function () { var d = new Date();
+                                var n = d.getTime();
+                                return 'TotalAccountBuys_' + n;}
+                        },
+                        'copy'],
+                initComplete: function () {
+                    var btns = $('.dt-button');
+                    btns.addClass('btn btn-primary');
+                    btns.removeClass('dt-button');
+                },
+                columns: [
+                    {data: 'Account_ID'},
+                    {data: 'Account_Address'},
+                    {data: 'Total_Sold', orderable: true, searchable: false},
+                    {data: 'Total_Volume_LRC', orderable: true, searchable: false},
+                    {data: 'Total_Volume_ETH', orderable: true, searchable: false}
+                ],
+                order: [[2, 'desc']],
+            });
+        });
+    </script>
+{% endblock %}

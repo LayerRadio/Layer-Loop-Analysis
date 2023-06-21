@@ -1,0 +1,52 @@
+
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark border-bottom mx-2">
+        <button class="btn btn-primary" id="menu-toggle">Layer Loop Analysis</button>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ms-auto  mt-0 mt-lg-0 mr-2">
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{ url_for('home') }}">Home</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#"  id="navbarDropdown" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Dropdown
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end" aria-labelledby="navbarDropdown">
+                       <a class="dropdown-item" href="{{ url_for('home') }}">Home</a>
+                       <li class="dropdown-submenu">
+                            <a class="dropdown-item" href="#"> Collection <span class="float-end custom-toggle-arrow">&#187</span></a>
+                            <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end">
+                                <li><a class="dropdown-item" href="{{ url_for('collection') }}">Get Data</a></li>
+                                <li><a class="dropdown-item" href="{{ url_for('collection_dashboard') }}">Dashboard</a></li>
+                                <li><a class="dropdown-item" href="{{ url_for('collection_raw') }}">Raw Data</a></li>
+                            </ul>
+                        </li>
+                       <li class="dropdown-submenu">
+                           <a class="dropdown-item" href="#"> Wallet <span class="float-end custom-toggle-arrow">&#187</span></a>
+                           <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end">
+                               <li><a class="dropdown-item" href="{{ url_for('wallet') }}">Get Data</a></li>
+                               <li><a class="dropdown-item" href="{{ url_for('wallet_dashboard') }}">Dashboard</a></li>
+                           </ul>
+                       </li>
+                       <a class="dropdown-item" href="{{ url_for('about') }}">About</a>
+                    </ul>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" target="_blank" href="https://github.com/LayerRadio/Layer-Loop-Analysis">Github</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" target="_blank" href="https://twitter.com/LayerRadio">Twitter</a>
+                </li>
+
+            </ul>
+        </div>
+    </nav>
+

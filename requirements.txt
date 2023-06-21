@@ -1,0 +1,15 @@
+Flask~=2.2.3
+WTForms~=3.0.1
+flask-WTF~=1.1.1
+SQLAlchemy~=2.0.9
+flask-SQLAlchemy~=3.0.3
+gql[all]~=3.4.0
+pandas~=2.0.0
+aiohttp~=3.8.4
+plotly~=5.14.1
+networkx~=3.1
+scipy~=1.10.1
+Cython~=0.29.34
+pydot~=1.4.2
+# graphviz~=0.20.1
+# pygraphviz~=1.10

@@ -1,0 +1,9 @@
+version: '3'
+services:
+  layer-flask:
+    container_name: "layerloopanalysis"
+    build: .
+    ports:
+      - "80:5000"
+    volumes:
+      - .:/usr/src/app

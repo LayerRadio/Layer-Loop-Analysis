@@ -1,0 +1,40 @@
+
+    <div class="bg-dark border-right  vh-101 "  id="sidebar-wrapper" >
+        <div class="sidebar-heading  text-white text-center" >Menu</div>
+        <div class="list-group " >
+            <a href="{{ url_for('home') }}" class="list-group-item list-group-item-action bg-dark  {% if 'home' == request.endpoint %}font-weight-bold text-info{% else %}text-primary{% endif %}"  >Home</a>
+            <div class="dropdown active">
+                <a href="#collectionSubmenu"  data-bs-toggle="collapse" aria-expanded="false"  class="list-group-item list-group-item-action dropdown-toggle bg-dark  {% if 'collection' in request.endpoint %}font-weight-bold text-info{% else %}text-primary{% endif %}">
+                    Collection
+                </a>
+                <ul class="{% if 'collection' in request.endpoint %}expand{% else %}collapse{% endif %} list-group-item-secondary  bg-dark bg-darken text-primary " id="collectionSubmenu">
+                    <li>
+                        <a href="{{ url_for('collection') }}" class="list-group-item list-group-item-action bg-dark {% if 'collection' == request.endpoint %}font-weight-bold text-info{% else %}text-primary{% endif %}">Get Data</a>
+                    </li>
+                    <li>
+                        <a href="{{ url_for('collection_dashboard') }}" class="list-group-item list-group-item-action bg-dark bg-darken {% if 'collection_dashboard' in request.endpoint %}font-weight-bold text-info{% else %}text-primary{% endif %}">Dashboard</a>
+                    </li>
+                    <li>
+                        <a href="{{ url_for('collection_raw') }}" class="list-group-item list-group-item-action bg-dark bg-darken {% if 'collection_raw' in request.endpoint %}font-weight-bold text-info{% else %}text-primary{% endif %}">Raw Data</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="dropdown">
+                <a href="#walletSubmenu"  data-bs-toggle="collapse" aria-expanded="false"  class="list-group-item list-group-item-action dropdown-toggle bg-dark  {% if 'wallet' in request.endpoint %}font-weight-bold text-info{% else %}text-primary{% endif %}">
+                    Wallet
+                </a>
+                <ul class="{% if 'wallet' in request.endpoint %}expand{% else %}collapse{% endif %} list-group-item-secondary  bg-dark bg-darken text-primary " id="walletSubmenu">
+                    <li>
+                        <a href="{{ url_for('wallet') }}" class="list-group-item list-group-item-action bg-dark {% if 'wallet' == request.endpoint %}font-weight-bold text-info{% else %}text-primary{% endif %}">Get Data</a>
+                    </li>
+                    <li>
+                        <a href="{{ url_for('wallet_dashboard') }}" class="list-group-item list-group-item-action bg-dark bg-darken {% if 'wallet_dashboard' in request.endpoint %}font-weight-bold text-info{% else %}text-primary{% endif %}">Dashboard</a>
+                    </li>
+                </ul>
+            </div>
+            <a href="/about" class="list-group-item list-group-item-action bg-dark bg-darken text-primary">About</a>
+        </div>
+    </div>
+
+

@@ -1,0 +1,376 @@
+{% extends "layout.html" %}
+
+{% block css %}
+  <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block nav_collection %}active{% endblock %}
+
+{% block content %}
+<div class="card-group  flex-wrap">
+    <div class="card text-white bg-dark  bg-gradient rounded mb-3 py-3" style="flex-grow:.2">
+        <div class="card-body">
+            <h5 class="card-title">Collection Info</h5>
+            <p class="card-text">
+                <p><a data-toggle="tooltip" title="Total number of Transactions (Tx)">Tx (All): <strong>{{overall_info.Total_Tx}}</strong></a></p>
+                <p><a data-toggle="tooltip" title="Total number of MintNFT Transactions (includes Deposits from L1)">Tx (Mint): <strong>{{overall_info.Tx_Mint}}</strong></a>
+                    <br/> <a data-toggle="tooltip" title="Total number of NFTs Minted (includes Deposits from L1)">NFTs Minted: <strong>{{overall_info.Total_Minted}}</strong></a>
+                    <br/> <a data-toggle="tooltip" title="Total number of Burned NFTs">NFTs Burned: <strong>{{overall_info.Total_Burned}}</strong></a>
+                    <br/> <a data-toggle="tooltip" title="Total number of NFTs Withdrawn to L1">NFTs Withdrawn: <strong>{{overall_info.Total_Withdrawal}}</strong></a>
+                    <br/> <a data-toggle="tooltip" title="Total number of NFTs Deposited from L1 to L2 (A deposit mints a new NFT and the minter is the Contract Address)">NFTs Deposited: <strong>{{overall_info.Total_Deposited}}</strong></a>
+                </p>
+                <p> <a data-toggle="tooltip" title="Total number of TransferNFT Transactions
+                        (Does Not Include Burned Transfers,
+                        If including Burned than total number is:{{overall_info.Total_Tx_Transfer}})">Tx (Transfer): <strong>{{overall_info.Total_Tx_Transfer_NotBurned}}</strong>
+                    </a>
+                    <br/>
+                    <a data-toggle="tooltip" title="Total number of NFTs Transfered
+                        (Does Not Include Burned NFTs,
+                        If including Burned than total number is: {{overall_info.Total_Transfer}})">NFTs Transferred: <strong>{{overall_info.Total_Transfer_NotBurned}}</strong>
+                    </a>
+                </p>
+                <p><a data-toggle="tooltip" title="Total number and price of NFTs Traded">NFTs Sold: <strong>{{overall_info.Total_Traded}}</strong>
+                    <br/> <strong>{{ ('%0.8f' | format(overall_info.Sales_LRC | float())).rstrip('0').rstrip('.') }}</strong> LRC
+                    <br/> <strong>{{ ('%0.8f' | format(overall_info.Sales_ETH | float())).rstrip('0').rstrip('.') }}</strong> ETH
+                </a></p>
+                <p><a data-toggle="tooltip" title="Total Royalties of NFTs Traded">Royalties:
+                    <br/> <strong>{{ ('%0.8f' | format(overall_info.Royalties_LRC | float())).rstrip('0').rstrip('.') }}</strong> LRC
+                    <br/> <strong>{{ ('%0.8f' | format(overall_info.Royalties_ETH | float())).rstrip('0').rstrip('.') }}</strong> ETH
+                </a></p>
+                <p><a data-toggle="tooltip" title="Total Fees from Transfers, Trades, Withdrawal (Does Not include the Minting Fees)">Total Fees:
+                    <br/> <strong>{{ ('%0.8f' | format((overall_info.from_fee_sales_LRC or 0.0) + (overall_info.to_fee_sales_LRC or 0.0) | float())).rstrip('0').rstrip('.') }}</strong> LRC
+                    <br/> <strong>{{ ('%0.8f' | format((overall_info.from_fee_sales_ETH or 0.0) + (overall_info.to_fee_sales_ETH or 0.0) | float())).rstrip('0').rstrip('.') }}</strong> ETH
+                </a></p>
+                <p><a data-toggle="tooltip" title="Total Minting Fees">Total Mint Fees:
+                    <br/> <strong>{{ ('%0.8f' | format(overall_info.mint_fee_LRC | float())).rstrip('0').rstrip('.') }}</strong> LRC
+                    <br/> <strong>{{ ('%0.8f' | format(overall_info.mint_fee_ETH | float())).rstrip('0').rstrip('.') }}</strong> ETH
+                </a></p>
+
+            </p>
+        </div>
+    </div>
+
+    <div class="card text-white bg-dark bg-gradient rounded mb-3 py-3">
+        <div class="card-body">
+            <div class="d-flex justify-content-between">
+                <div>
+                    <p class="fs-3 lh-1 fw-bold">Collection Sales</p>
+                </div>
+                <div>
+                <label for="csales">Search:  </label>
+                    <input type="text "
+                           style="width: 40rem; height: 2rem;"
+                           id="csales"
+                           name="csales"
+                           onchange="cbChartNftSales(this.value)"
+                           placeholder="ex: Nft ID, Account Address, or Account ID"
+                           size="2rem"/>
+                </div>
+            </div>
+            <div id="chart" class="responsive-plot"></div>
+            <div id="png_chart"></div>
+        </div>
+    </div>
+</div>
+
+<br/>
+
+<div class="card-group">  <!--    col-lg-8    h-100 -->
+    <div class="card text-white bg-dark bg-gradient rounded mb-3 py-3">
+        <div class="card-body">
+            <div class="d-flex justify-content-between">
+                <div>
+                    <p class="fs-3 lh-1 fw-bold">Collection Network</p>
+                </div>
+                <div>
+                    <label for="cnetwork">Search:  </label>
+                    <input type="text "
+                           style="width: 40rem; height: 2rem;"
+                           id="cnetwork"
+                           name="cnetwork"
+                           onchange="cbChartNftNetwork(this.value)"
+                           placeholder="ex: Nft ID, Account Address, or Account ID"
+                           size="50rem"/>
+                </div>
+            </div>
+            <div id="chart_NftNetwork" class="responsive-plot"></div>
+            <div id="png_chart_NetworkGraph"></div>
+            <p class="card-text"><small class="text-muted">Trades and Transfers</small></p>
+        </div>
+    </div>
+</div>
+
+<br/>
+
+<div class="card-group">
+    <div class="card text-white bg-dark bg-gradient rounded mb-3 py-3">
+        <div class="card-body">
+            <h5 class="card-title">Total Holders by Account</h5>
+            </p>
+            <div class="table-responsive">
+                <table id="table_account_holders" class="table table-dark table-bordered table-striped" style="width:100%;">
+                    <thead>
+                        <tr>
+                            <th>Account Id</th>
+                            <th>Account Address</th>
+                            <th>Total Amount</th>
+                            <th>TotalWithouWithdrawl</th>
+                            <th>Withdrawn</th>
+                            <th>Deposited</th>
+                        </tr>
+                    </thead>
+                    {% for row in total_acct_sales %}
+                    <tr id="{{row.Account_ID2}}">
+                        <th>{{row.Account_ID2}}</th>
+                        <th>{{row.Account_Address}}</th>
+                        <th>{{ '%0.2f' | format(row.Total_Amount | float()) }}</th>
+                        <th>{{ '%0.2f' | format(row.TotalWithouWithdrawl | float()) }}</th>
+                        <th>{{row.Withdrawn}}</th>
+                        <th>{{row.Deposited}}</th>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="card text-white bg-dark bg-gradient rounded mb-3 py-3">
+        <div class="card-body">
+            <h5 class="card-title">Total Volume by Account</h5>
+            </p>
+            <div class="table-responsive">
+                <table id="table_account_volume" class="table table-dark table-bordered table-striped" style="width:100%;">
+                    <thead>
+                        <tr>
+                            <th>Account Id</th>
+                            <th>Account Address</th>
+                            <th>Amount Traded</th>
+                            <th>Total (LRC)</th>
+                            <th>Total (ETH)</th>
+                        </tr>
+                    </thead>
+                    {% for row in total_acct_volume %}
+                    <tr id="{{row.Account_ID_total2}}">
+                        <th>{{row.Account_ID}}</th>
+                        <th>{{row.Account_Address}}</th>
+                        <th>{{row.Total_Sold}}</th>
+                        <th>{{ '%0.2f' | format(row.Total_Volume_LRC | float()) }}</th>
+                        <th>{{ '%0.2f' | format(row.Total_Volume_ETH | float()) }}</th>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<br/>
+
+<div class="card-group ">
+    <div class="card text-white bg-dark  bg-gradient  py-3 mb-3 rounded">
+        <div class="card-body">
+            <h5 class="card-title">Total Sell Volume by Account</h5>
+            <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
+            <div class="table-responsive">
+                <table id="table_account_sells" class="table table-dark table-bordered table-striped" style="width:100%;">
+                    <thead>
+                        <tr>
+                            <th>Account Id</th>
+                            <th>Account Address</th>
+                            <th>Amount</th>
+                            <th>Total (LRC)</th>
+                            <th>Total (ETH)</th>
+                        </tr>
+                    </thead>
+                    {% for row in total_acct_sales %}
+                    <tr id="{{row.from_acct_id2}}">
+                        <th>{{row.Account_ID}}</th>
+                        <th>{{row.Account_Address}}</th>
+                        <th>{{row.Total_Sold}}</th>
+                        <th>{{ '%0.2f' | format(row.Total_Volume_LRC | float()) }}</th>
+                        <th>{{ '%0.2f' | format(row.Total_Volume_ETH | float()) }}</th>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="card text-white bg-dark bg-gradient mb-3 rounded" >
+        <div class="card-body">
+            <h5 class="card-title">Total Buy Volume by Account</h5>
+            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
+            <div class="table-responsive">
+                <table id="table_account_buys" class="table table-dark table-bordered table-striped" style="width:100%;">
+                    <thead>
+                        <tr>
+                            <th>Account Id</th>
+                            <th>Account Address</th>
+                            <th>Amount</th>
+                            <th>Total (LRC)</th>
+                            <th>Total (ETH)</th>
+                        </tr>
+                    </thead>
+                    {% for row in total_acct_buys %}
+                    <tr id="{{row.to_acct_id}}">
+                        <th>{{row.Account_ID}}</th>
+                        <th>{{row.Account_Address}}</th>
+                        <th>{{row.Total_Sold}}</th>
+                        <th>{{ '%0.2f' | format(row.Total_Volume_LRC | float()) }}</th>
+                        <th>{{ '%0.2f' | format(row.Total_Volume_ETH | float()) }}</th>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
+{% block datatable_scripts %}
+    <script>
+        $(document).ready(function() {
+            $('#table_account_holders').DataTable({
+                dom: "<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'f>>" +
+                    "<'row mb-2'<'col-sm-12'tr>>" +
+                    "<'row'<'col-sm-12 col-md-5'B><'col-sm-12 col-md-7'p>>" +
+                    "<'row'<'col-sm-12 text-end small text-muted'i>>",
+                ajax: '/callback/table/getHoldersByAccount',
+                buttons:[
+                        {
+                            extend: 'csvHtml5',
+                            text:   'Export CSV',
+                            filename: function () { var d = new Date();
+                                var n = d.getTime();
+                                return 'TotalAccountHolders_' + n;}
+                        },
+                        'copy'],
+                initComplete: function () {
+                    var btns = $('.dt-button');
+                    btns.addClass('btn btn-primary');
+                    btns.removeClass('dt-button');
+                },
+                columns: [
+                    {data: 'Account_ID2'},
+                    {data: 'Account_Address'},
+                    {data: 'Total_Amount', orderable: true, searchable: false},
+                    {data: 'TotalWithouWithdrawl', orderable: true, searchable: false},
+                    {data: 'Withdrawn', orderable: true, searchable: false},
+                    {data: 'Deposited', orderable: true, searchable: false}
+                ],
+                "lengthMenu": [10,25,50,100,500],
+                order: [[2, 'desc']],
+                "sScrollX": "100%",
+                "scrollCollapse": true,
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            $('#table_account_sells').DataTable({
+                dom: "<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'f>>" +
+                    "<'row mb-2'<'col-sm-12'tr>>" +
+                    "<'row'<'col-sm-12 col-md-5'B><'col-sm-12 col-md-7'p>>" +
+                    "<'row'<'col-sm-12 text-end small text-muted'i>>",
+                ajax: '/callback/table/getSalesByAccount',
+                buttons:[
+                        {
+                            extend: 'csvHtml5',
+                            text:   'Export CSV',
+                            filename: function () { var d = new Date();
+                                var n = d.getTime();
+                                return 'TotalAccountSales_' + n;}
+                        },
+                        'copy'],
+                initComplete: function () {
+                    var btns = $('.dt-button');
+                    btns.addClass('btn btn-primary');
+                    btns.removeClass('dt-button');
+                },
+                columns: [
+                    {data: 'Account_ID'},
+                    {data: 'Account_Address'},
+                    {data: 'Total_Sold', orderable: true, searchable: false},
+                    {data: 'Total_Volume_LRC', orderable: true, searchable: false},
+                    {data: 'Total_Volume_ETH', orderable: true, searchable: false}
+                ],
+                order: [[2, 'desc']],
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            $('#table_account_buys').DataTable({
+                dom: "<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'f>>" +
+                    "<'row mb-2'<'col-sm-12'tr>>" +
+                    "<'row'<'col-sm-12 col-md-5'B><'col-sm-12 col-md-7'p>>" +
+                    "<'row'<'col-sm-12 text-end small text-muted'i>>",
+                ajax: '/callback/table/getBuysByAccount',
+                buttons:[
+                        {
+                            extend: 'csvHtml5',
+                            text:   'Export CSV',
+                            filename: function () { var d = new Date();
+                                var n = d.getTime();
+                                return 'TotalAccountBuys_' + n;}
+                        },
+                        'copy'],
+                initComplete: function () {
+                    var btns = $('.dt-button');
+                    btns.addClass('btn btn-primary');
+                    btns.removeClass('dt-button');
+                },
+                columns: [
+                    {data: 'Account_ID'},
+                    {data: 'Account_Address'},
+                    {data: 'Total_Sold', orderable: true, searchable: false},
+                    {data: 'Total_Volume_LRC', orderable: true, searchable: false},
+                    {data: 'Total_Volume_ETH', orderable: true, searchable: false}
+                ],
+                order: [[2, 'desc']],
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            $('#table_account_volume').DataTable({
+                dom: "<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'f>>" +
+                    "<'row mb-2'<'col-sm-12'tr>>" +
+                    "<'row'<'col-sm-12 col-md-5'B><'col-sm-12 col-md-7'p>>" +
+                    "<'row'<'col-sm-12 text-end small text-muted'i>>",
+                ajax: '/callback/table/getVolumeByAccount',
+                buttons:[
+                        {
+                            extend: 'csvHtml5',
+                            text:   'Export CSV',
+                            filename: function () { var d = new Date();
+                                var n = d.getTime();
+                                return 'TotalAccountBuys_' + n;}
+                        },
+                        'copy'],
+                initComplete: function () {
+                    var btns = $('.dt-button');
+                    btns.addClass('btn btn-primary');
+                    btns.removeClass('dt-button');
+                },
+                columns: [
+                    {data: 'Account_ID'},
+                    {data: 'Account_Address'},
+                    {data: 'Total_Sold', orderable: true, searchable: false},
+                    {data: 'Total_Volume_LRC', orderable: true, searchable: false},
+                    {data: 'Total_Volume_ETH', orderable: true, searchable: false}
+                ],
+                order: [[2, 'desc']],
+            });
+        });
+    </script>
+{% endblock %}
+
+
+{% block plotly_scripts %}
+    <script>cbChartNftSales("");</script>
+    <script>cbChartNftNetwork("");</script>
+{% endblock %}

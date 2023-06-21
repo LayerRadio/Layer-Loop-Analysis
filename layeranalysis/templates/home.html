@@ -1,0 +1,63 @@
+{% extends "layout.html" %}
+
+
+{% block css %}
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+{% endblock %}
+
+
+{% block content %}
+    <div class="container">
+        <div class="card text-white bg-dark bg-gradient text-center rounded mb-3 py-3">
+            <div class="card-body">
+                <h1 class="lh-1 fw-bold" >Layer Loop Analysis</h1>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="card text-light bg-dark bg-gradient rounded ">
+            <div class="card-title">
+                <h2 class="mt-4">Welcome</h2>
+            </div>
+            <div class="card-body">
+
+                <p>Layer Loop Analysis is a Dashboard for Loopring NFT Collections and Loopring Wallets (Wallet Analysis coming Soon)</p>
+                <ul>
+                    <li>
+                        This is the Alpha release of Layer Loop Analysis! Code for the LayerLoopAnalysis can be found at:
+                        <a href="https://github.com/LayerRadio/Layer-Loop-Analysis" target="_blank">https://github.com/LayerRadio/Layer-Loop-Analysis</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li>
+                        Layer Loop Analysis retrieves the Transactions of a Collection's
+                        contract address and stores them locally to a SQL Database.
+                    </li>
+                </ul>
+                <ul>
+                    <li>Loopring is an Ethereum Layer 2 zk-Rollup. Learn more about Loopring at
+                        <a href="https://loopring.io/#/" target="_blank">loopring.io</a>
+                    </li>
+
+                </ul>
+                <ul>
+                    <li>Please let me know if you have any suggestions or features you would like.
+                        I would also appreciate suggestions and collaborations on code
+                    </li>
+
+                </ul>
+                </br>
+                <p>If you like the dashboard, please grab an NFT or 2 on LoopExchange
+                    <a href="https://loopexchange.art/collection/shiddyzoo" target="_blank">ShiddyZoo - Meet the Zoo</a> on LoopExchange
+                </p>
+                </br>
+                </br>
+                <p>
+                    <code>Disclaimer: This is an alpha release, Collections downloaded may need to be re-downloaded
+                            in a future release, and testing for accuracy is still in progress</code>
+                </p>
+            </div>
+        </div>
+    </div>
+{% endblock %}
