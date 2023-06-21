@@ -107,7 +107,6 @@ Once the Collections have been selected on the Get Data page, navigate to the Da
 Below this, you will find a network graph of the Collection(s). It includes all transactions except minting. For large collections, this can take a minute or 2 to display. Due to performance, this may need to be moved to it's own page (especially for wallet analysis).
 
 
-
 #### Raw Data
 
 Collections are based on the contract address. This means that if there are multiple loopring collections, than they will appear just under the contract address. In the future, looking to add this in, but will need to add in API calls. This seems to mainly affect Legacy Loopring collections.
@@ -142,21 +141,14 @@ This is in Alpha stage and is being released at this stage so that the community
 The future development will be taking in request and ideas from the community.
 
 - Take requests/suggestions from the Community
-
 - Tracking and Analysis for Wallets
-
 - Improved error handling
-
 - Add support for Loopring Collections (this will be based on request and discussion)
-
 - Add analysis, graphs and tables (this will be based on request and discussion)
-
 - Add Ajax calls to charts and tables
-
 - Investigate NetworkGraphs for improved performance and functionality (considering moving to it's own section due to performance)
-
 - File/Folder restructuring
-
+- Code clean up
 - Set up CI
 
 
@@ -168,11 +160,11 @@ Or LayerRadio.eth - [0xb36a4675be59cd8ef2cbef43ebfb06c053e41848](https://explore
 
 ## Testing
 
-If you are unfamiliar with Loopring, can run this againt the following collections
+If you are unfamiliar with Loopring, can run this against the following collections
 
 0xb07e92e0a9dc45711a9ef4c6cccfcde798de75ff
 0x0a6f4b318b9397670a9926acbddbb9a3361b71bd
-0x43778ce982ef806376f9f6b87f426ba9f4e9ee3a (this one take under an hour to download)
+0x43778ce982ef806376f9f6b87f426ba9f4e9ee3a (this one takes 30 minutes to an hour to download)
 
 
 ## Credits
@@ -188,7 +180,6 @@ Special thanks to [Fudgey](https://github.com/fudgebucket27) for his work all hi
 [Miguel Grinberg](https://github.com/miguelgrinberg), can also check out his blog with topics on Flask
 
 [README.md](README.md) is partially modeled off of Taiko's Docs [taiko-mono](https://github.com/taikoxyz/taiko-mono/blob/main/packages/website/pages/docs/guides/run-a-node.mdx)
-
 
 
 # Licensing
@@ -213,7 +204,7 @@ The license for the 2 art assets is currently restrictive. However, I am conside
 
 # Video Tutorial
 
-This is a video tutorial on how to use Layer Loop Analysis (placeholder)
+This is a video tutorial on how to use Layer Loop Analysis (Coming Soon)
 
 
 
