@@ -41,31 +41,6 @@
                             <th>Full Nft Id</th>
                         </tr>
                     </thead>
-                    {% for row in total_acct_sales %}
-                    <tr id="{{row.Tx_ID}}">
-                        <th>{{row.Tx_Id}}</th>
-                        <th>{{row.Nft_Id}}</th>
-                        <th>{{row.Tx_Type}}</th>
-                        <th>{{row.Coll_Addr}}</th>
-                        <th>{{row.From_Acct_Id}}</th>
-                        <th>{{row.From_Acct_Addr}}</th>
-                        <th>{{row.To_Acct_Id}}</th>
-                        <th>{{row.To_Acct_Address}}</th>
-                        <th>{{ '%0.8f' | format(row.Realized_Nft_Price | float()) }}</th>
-                        <th>{{row.Sell_Sym}}</th>
-                        <th>{{ '%0.8f' | format(row.From_Fee | float()) }}</th>
-                        <th>{{row.From_Fee_Sym}}</th>
-                        <th>{{ '%0.8f' | format(row.To_Fee | float()) }}</th>
-                        <th>{{row.To_Fee_Sym}}</th>
-                        <th>{{row.Amount}}</th>
-                        <th>{{row.Block_Timestamp}}</th>
-                        <th>{{ '%0.8f' | format(row.Royalties | float()) }}</th>
-                        <th>{{row.Royalties_Sym}}</th>
-                        <th>{{row.Creator_Fee_Bips}}</th>
-                        <th>{{row.Minter}}</th>
-                        <th>{{row.Full_Nft_Id}}</th>
-                    </tr>
-                    {% endfor %}
                 </table>
             </div>
         </div>
@@ -98,6 +73,14 @@
                     btns.addClass('btn btn-primary');
                     btns.removeClass('dt-button');
                 },
+                columnDefs:[
+                    {
+                        targets: [10, 12, 16],
+                        render: function ( data, type, row, meta ) {
+                            if (type === 'display' && !!data) {return Intl.NumberFormat('en', { maximumSignificantDigits: 15 }).format(data);let color = 'green';}
+                            else {return data;}}
+                    }
+                ],
                 columns: [
                     {data: 'Tx_Id', orderable: true, searchable: true},
                     {data: 'Nft_Id', orderable: true, searchable: false},

@@ -114,21 +114,11 @@
                             <th>Account Id</th>
                             <th>Account Address</th>
                             <th>Total Amount</th>
-                            <th>TotalWithouWithdrawl</th>
+                            <th>Total WithoutWithdrawl</th>
                             <th>Withdrawn</th>
                             <th>Deposited</th>
                         </tr>
                     </thead>
-                    {% for row in total_acct_sales %}
-                    <tr id="{{row.Account_ID2}}">
-                        <th>{{row.Account_ID2}}</th>
-                        <th>{{row.Account_Address}}</th>
-                        <th>{{ '%0.2f' | format(row.Total_Amount | float()) }}</th>
-                        <th>{{ '%0.2f' | format(row.TotalWithouWithdrawl | float()) }}</th>
-                        <th>{{row.Withdrawn}}</th>
-                        <th>{{row.Deposited}}</th>
-                    </tr>
-                    {% endfor %}
                 </table>
             </div>
         </div>
@@ -149,15 +139,6 @@
                             <th>Total (ETH)</th>
                         </tr>
                     </thead>
-                    {% for row in total_acct_volume %}
-                    <tr id="{{row.Account_ID_total2}}">
-                        <th>{{row.Account_ID}}</th>
-                        <th>{{row.Account_Address}}</th>
-                        <th>{{row.Total_Sold}}</th>
-                        <th>{{ '%0.2f' | format(row.Total_Volume_LRC | float()) }}</th>
-                        <th>{{ '%0.2f' | format(row.Total_Volume_ETH | float()) }}</th>
-                    </tr>
-                    {% endfor %}
                 </table>
             </div>
         </div>
@@ -170,7 +151,7 @@
     <div class="card text-white bg-dark  bg-gradient  py-3 mb-3 rounded">
         <div class="card-body">
             <h5 class="card-title">Total Sell Volume by Account</h5>
-            <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
+            </p>
             <div class="table-responsive">
                 <table id="table_account_sells" class="table table-dark table-bordered table-striped" style="width:100%;">
                     <thead>
@@ -182,15 +163,6 @@
                             <th>Total (ETH)</th>
                         </tr>
                     </thead>
-                    {% for row in total_acct_sales %}
-                    <tr id="{{row.from_acct_id2}}">
-                        <th>{{row.Account_ID}}</th>
-                        <th>{{row.Account_Address}}</th>
-                        <th>{{row.Total_Sold}}</th>
-                        <th>{{ '%0.2f' | format(row.Total_Volume_LRC | float()) }}</th>
-                        <th>{{ '%0.2f' | format(row.Total_Volume_ETH | float()) }}</th>
-                    </tr>
-                    {% endfor %}
                 </table>
             </div>
         </div>
@@ -198,7 +170,7 @@
     <div class="card text-white bg-dark bg-gradient mb-3 rounded" >
         <div class="card-body">
             <h5 class="card-title">Total Buy Volume by Account</h5>
-            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
+            </p>
             <div class="table-responsive">
                 <table id="table_account_buys" class="table table-dark table-bordered table-striped" style="width:100%;">
                     <thead>
@@ -210,15 +182,6 @@
                             <th>Total (ETH)</th>
                         </tr>
                     </thead>
-                    {% for row in total_acct_buys %}
-                    <tr id="{{row.to_acct_id}}">
-                        <th>{{row.Account_ID}}</th>
-                        <th>{{row.Account_Address}}</th>
-                        <th>{{row.Total_Sold}}</th>
-                        <th>{{ '%0.2f' | format(row.Total_Volume_LRC | float()) }}</th>
-                        <th>{{ '%0.2f' | format(row.Total_Volume_ETH | float()) }}</th>
-                    </tr>
-                    {% endfor %}
                 </table>
             </div>
         </div>
@@ -288,6 +251,14 @@
                     btns.addClass('btn btn-primary');
                     btns.removeClass('dt-button');
                 },
+                columnDefs:[
+                    {
+                        targets: [3,4],
+                        render: function ( data, type, row, meta ) {
+                            if (type === 'display' && !!data) {return Intl.NumberFormat('en', { maximumSignificantDigits: 15 }).format(data);}
+                            else {return data;}}
+                    }
+                ],
                 columns: [
                     {data: 'Account_ID'},
                     {data: 'Account_Address'},
@@ -295,7 +266,10 @@
                     {data: 'Total_Volume_LRC', orderable: true, searchable: false},
                     {data: 'Total_Volume_ETH', orderable: true, searchable: false}
                 ],
+                "lengthMenu": [10,25,50,100,500],
                 order: [[2, 'desc']],
+                "sScrollX": "100%",
+                "scrollCollapse": true,
             });
         });
     </script>
@@ -322,6 +296,14 @@
                     btns.addClass('btn btn-primary');
                     btns.removeClass('dt-button');
                 },
+                columnDefs:[
+                    {
+                        targets: [3,4],
+                        render: function ( data, type, row, meta ) {
+                            if (type === 'display' && !!data) {return Intl.NumberFormat('en', { maximumSignificantDigits: 15 }).format(data);}
+                            else {return data;}}
+                    }
+                ],
                 columns: [
                     {data: 'Account_ID'},
                     {data: 'Account_Address'},
@@ -329,7 +311,10 @@
                     {data: 'Total_Volume_LRC', orderable: true, searchable: false},
                     {data: 'Total_Volume_ETH', orderable: true, searchable: false}
                 ],
+                "lengthMenu": [10,25,50,100,500],
                 order: [[2, 'desc']],
+                "sScrollX": "100%",
+                "scrollCollapse": true,
             });
         });
     </script>
@@ -356,6 +341,14 @@
                     btns.addClass('btn btn-primary');
                     btns.removeClass('dt-button');
                 },
+                columnDefs:[
+                    {
+                        targets: [3,4],
+                        render: function ( data, type, row, meta ) {
+                            if (type === 'display' && !!data) {return Intl.NumberFormat('en', { maximumSignificantDigits: 15 }).format(data);}
+                            else {return data;}}
+                    }
+                ],
                 columns: [
                     {data: 'Account_ID'},
                     {data: 'Account_Address'},
@@ -363,7 +356,10 @@
                     {data: 'Total_Volume_LRC', orderable: true, searchable: false},
                     {data: 'Total_Volume_ETH', orderable: true, searchable: false}
                 ],
+                "lengthMenu": [10,25,50,100,500],
                 order: [[2, 'desc']],
+                "sScrollX": "100%",
+                "scrollCollapse": true,
             });
         });
     </script>
