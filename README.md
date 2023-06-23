@@ -99,13 +99,21 @@ To select Collections for the Dashboard, use the checkboxes and use the button `
 
 You can also update and Delete collections with the checkboxes.
 
+![LLA_Alpha_GetData_2023-06-23_11-49](https://github.com/LayerRadio/Layer-Loop-Analysis/assets/122059499/15dfb8ae-e13f-4049-aa2f-c56bda947d73)
 
 #### Dashboard
 
 Once the Collections have been selected on the Get Data page, navigate to the Dashboard page to see the Dashboard. The first card will have summarized data (note: hover over the data for explanations). The card to the right will have a graph showing the sales of the collection. It currently only displays sales in LRC and ETH (they seem to be the primary tokens used for transactions, however, if there have been sales using other tokens, please reach out, as this can be changed).
 
+![LLA_Alpha_Dashboard_1_2023-06-23_11-56](https://github.com/LayerRadio/Layer-Loop-Analysis/assets/122059499/ac642e31-b6c3-4ccf-9a0c-c8ead600de05)
+
 Below this, you will find a network graph of the Collection(s). It includes all transactions except minting. For large collections, this can take a minute or 2 to display. Due to performance, this may need to be moved to it's own page (especially for wallet analysis).
 
+<p align="center">
+  <img alt="Dark" src=https://github.com/LayerRadio/Layer-Loop-Analysis/assets/122059499/712a9dde-6eaf-4ace-a1b0-b12d0e853eaa width="45%">
+&nbsp; &nbsp; &nbsp; &nbsp;
+  <img alt="Dark" src=https://github.com/LayerRadio/Layer-Loop-Analysis/assets/122059499/95716d3f-c5e5-46c8-ad81-eb7c320b4bde width="45%">
+</p>
 
 #### Raw Data
 
@@ -162,9 +170,9 @@ Or LayerRadio.eth - [0xb36a4675be59cd8ef2cbef43ebfb06c053e41848](https://explore
 
 If you are unfamiliar with Loopring, can run this against the following collections
 
-0xb07e92e0a9dc45711a9ef4c6cccfcde798de75ff
-0x0a6f4b318b9397670a9926acbddbb9a3361b71bd
-0x43778ce982ef806376f9f6b87f426ba9f4e9ee3a (this one takes 30 minutes to an hour to download)
+- 0xb07e92e0a9dc45711a9ef4c6cccfcde798de75ff
+- 0x0a6f4b318b9397670a9926acbddbb9a3361b71bd
+- 0x43778ce982ef806376f9f6b87f426ba9f4e9ee3a (this one takes 30 minutes to an hour to download)
 
 
 ## Credits
