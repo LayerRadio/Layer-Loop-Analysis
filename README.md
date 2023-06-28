@@ -82,7 +82,7 @@ Note: remove the '-f' flag to not have the logs continuous.
 
 #### Updating Layer Loop Analysis Docker
 
-More on this soon. Currently discussing best delivery process. 
+More on this soon. Currently, discussing the best delivery process. 
 
 
 ## Using the Dashboard
@@ -97,7 +97,7 @@ A loading screen will display. Do not navigate away from this screen. If you don
 
 To select Collections for the Dashboard, use the checkboxes and use the button ``'Load All Selected items in the Dashboard'``. In the table, the column labeled `Active` will switch to `Yes`.
 
-You can also update and Delete collections with the checkboxes.
+You can also Update and Delete collections with the checkboxes.
 
 ![LLA_Alpha_GetData_2023-06-23_11-49](https://github.com/LayerRadio/Layer-Loop-Analysis/assets/122059499/15dfb8ae-e13f-4049-aa2f-c56bda947d73)
 
@@ -135,13 +135,15 @@ Layer Loop Analysis
 - Search Tables by Wallet Addresses and Ids
 - Price Graph
 - Network Graph
-- Sales Tables
+- Sales and Transactions Tables
 - Can perform analysis on multiple collections at once
 
 
 ## Important note
 
-This is in Alpha stage and is being released at this stage so that the community can have input. There is still further testing needed for accuracy.
+- This is in Alpha stage and is being released at this stage so that the community can have input. There is still further testing needed for accuracy. 
+
+- Legacy Collections and unnamed collections will have 'None' in the Name. 
 
 
 ## Future
@@ -172,7 +174,8 @@ If you are unfamiliar with Loopring, can run this against the following collecti
 
 - 0xb07e92e0a9dc45711a9ef4c6cccfcde798de75ff
 - 0x0a6f4b318b9397670a9926acbddbb9a3361b71bd
-- 0x43778ce982ef806376f9f6b87f426ba9f4e9ee3a (this one takes 30 minutes to an hour to download)
+- 0x43778ce982ef806376f9f6b87f426ba9f4e9ee3a (this one takes a few minutes to download)
+- 0x1cacc96e5f01e2849e6036f25531a9a064d2fb5f (this one takes 30 minutes to an hour to download)
 
 
 ## Credits
@@ -212,7 +215,9 @@ The license for the 2 art assets is currently restrictive. However, I am conside
 
 # Video Tutorial
 
-This is a video tutorial on how to use Layer Loop Analysis (Coming Soon)
+This is a youtube video tutorial on how to use Layer Loop Analysis 
+
+[https://www.youtube.com/watch?v=adp33az-rac](https://www.youtube.com/watch?v=adp33az-rac)
 
 
 
